@@ -1,0 +1,145 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@page import="com.hospitalmanagement.beans.Patient"%>
+<%@page import="com.hospitalmanagement.beans.Test"%>
+<%@page import="com.hospitalmanagement.beans.Medicine"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Generate Bill</title>
+
+</head>
+<body>
+<h3>Patient Billing</h3>
+<table>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Age</th>
+<th>Address</th>
+<th>DOJ</th>
+<th>Discharge Date</th>
+<th>Type of Room</th>
+</tr>
+<%
+try{
+String id=(String)request.getAttribute("PatientId");%>
+<tr>
+<td>
+
+<form class="example" action="DeskController" method="post">
+
+<button type="submit" ><i class="fa fa-search"></i></button>
+  <input type="hidden" name="action" value="getBill">
+<%if(id!=null){ %>
+  <input type="text" placeholder="Enter patient id" name="patient_id" id="id" value=<%= (String) request.getAttribute("PatientId")%>>
+<%}else{ %>
+ <input type="text" placeholder="Enter patient id" name="patient_id" id="id">
+ <%} %>
+</form>
+</td>
+<%
+Patient p=(Patient)request.getAttribute("patient");
+%>
+<td><%=p.getName() %></td>
+<td><%=p.getAge()%></td>
+<td><%=p.getAddress()%></td>
+<td><%=p.getDate()%></td>
+<td><%= request.getAttribute("dod")%></td>
+<td><%=p.getBedtype() %></td>
+</tr>
+</table>
+
+<p>
+	No of Days: <%=request.getAttribute("days")%>
+	Bill for Room: Rs.<%=request.getAttribute("bedbill")%> 
+</p>
+<br><br>
+<div class="center">
+		<h2 align="center">
+			<font><strong>Pharmacy Charges</strong></font>
+		</h2>
+		
+			<table class="content">
+				<tr>
+					<th>Medicine</th>
+					<th>Quantity</th>
+					<th>Rate</th>
+					<th>Amount</th>
+				</tr>
+				<%ArrayList<Medicine> med=(ArrayList<Medicine>)request.getAttribute("med");
+				
+				%>
+				<%for(Medicine m:med ){%>
+				<tr>
+					<td><%=m.getmName()%></td>
+					
+					<td><%=m.getQuantity()%></td>
+					
+					<td>Rs.<%=m.getRate()%></td>
+					<td>Rs.<%=m.getAmount()%></td>
+				</tr>
+				<%}%>
+			</table>
+<br>
+<p>
+	Bill for Pharmacy : Rs.<%=request.getAttribute("medbill")%>
+</p>			
+	
+</div>	
+
+<br><br>
+<div class="center">
+		<h2 align="center">
+			<font><strong>Diagnosis Charges</strong></font>
+		</h2>
+		
+			<table class="content">
+				<tr>
+					<th>TestName</th>
+					<th>Amount</th>
+					
+				</tr>
+				<%ArrayList<Test> test=(ArrayList<Test>)request.getAttribute("test");
+				
+				%>
+				<%for(Test t:test ){%>
+				<tr>
+					<td><%=t.getTestName()%></td>
+					
+					<td>Rs.<%=t.getAmount()%></td>	
+				</tr>
+				<%}%>
+			</table>
+<br>
+<p>
+	Bill for Diagnosis : Rs.<%=request.getAttribute("testbill")%>
+</p>			
+	
+</div>
+<div class="center">
+	<form action="DeskController" method="post">
+		
+		<input type="hidden" name="id" value=<%=request.getAttribute("PatientId")%>>
+		<input type="hidden" name="action" value="discharge">
+		<input type="submit" name="Confirm">
+	</form>
+	
+	Grant Total: <%=request.getAttribute("totalbill")%>
+
+</div>
+
+<%
+}
+%><% }catch(Exception e){
+		
+	}
+finally{
+	
+}%>
+
+
+</body>
+</html>

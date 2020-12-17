@@ -1,0 +1,32 @@
+@charset "ISO-8859-1";
+p{
+	color:#ffffff;
+}
+hr{
+	color:#0000;
+}
+#sub-header{
+	background-color:#80ffff;
+	padding:0px;
+}
+.patientInfo,.pharmacyInfo,.diagnotistInfo{
+	background-color:#80ffff;
+}
+.patientInfo{
+	width:33%;
+	float:left;
+	padding:0px;
+}
+.pharmacyInfo{
+	width:33%;
+	float:left;
+	padding:0px;
+}
+.diagnotistInfo{
+	width:33%;
+	float:right;
+	padding:0px;
+}
+body{
+	background-color:#80ffff;
+}
